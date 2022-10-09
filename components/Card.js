@@ -1,21 +1,36 @@
-import React from 'react'
+import Button from 'react-bootstrap/Button';
+import Card from 'react-bootstrap/Card';
+import React, {Component} from 'react';
+import Link from 'next/link';
 
-function Card({src}) {
-  return (
-    <div className="col-lg-4 mt-4 col-sm-12" >
-      <div className="card bg-dark text-white border-0">
-        <img src={src} className="card-img" alt="..." />
-        <div className="card-img-overlay">
-          <h5 className="card-title">Card title</h5>
-          <p className="card-text">
-            This is a wider card with supporting text below as a natural lead-in
-            to additional content. This content is a little bit longer.
-          </p>
-          <p className="card-text">Last updated 3 mins ago</p>
-        </div>
-      </div>
-    </div>
-  );
+
+
+
+class BookingCard extends Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      booking: this.props.booking
+    }
+  }
+  render() {
+    return (
+      <Card className="text-center">
+        <Card.Header>Pitch: {this.props.booking.pitchId}</Card.Header>
+        <Card.Body>
+          <Card.Title>Start Time: {this.props.startTime}</Card.Title>
+          <Card.Text>
+            Player Count: {this.props.booking.playersCount}
+          </Card.Text>
+          <Link href={{pathname:"/booking",query:{
+            ...this.props.booking, index: this.props.index
+          }}}>
+            <Button variant="primary" color="secondary">Open Booking</Button>
+          </Link>
+        </Card.Body>
+      </Card>
+    );
+  }
 }
 
-export default Card
+export default BookingCard;

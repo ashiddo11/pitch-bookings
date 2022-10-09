@@ -1,26 +1,83 @@
-import Navbar from "../components/Navbar";
-import Card from "../components/Card";
+import React, {Component, useEffect} from 'react';
+import BookingCard from "../components/Card";
+import CardGroup from 'react-bootstrap/CardGroup';
 
-export default function Home() {
+// class Home extends Component {
+//   constructor(props){
+//     super(props);
+//   }
+//   componentDidMount = () => {
+//     console.log('yoooo')
+//     if ("serviceWorker" in navigator) {
+//           window.addEventListener("load", function () {
+//             navigator.serviceWorker.register("/sw-offline.js").then(
+//               function (registration) {
+//                 console.log(
+//                   "Service Worker registration successful with scope: ",
+//                   registration.scope
+//                 );
+//               },
+//               function (err) {
+//                 console.log("Service Worker registration failed: ", err);
+//               }
+//             );
+//           });
+//         }
+//       // this.props.findAll().then(bookings => this.setState({bookings: bookings}))
+//       }
+//   componentWillReceiveProps(nextProps) {
+//     console.log(nextProps)
+//     this.setState({bookings: nextProps.bookings });  
+//   }
+    
+//   render() {
+//     // if (Array.isArray(this.props.bookings)){
+//     //   console.log(this.props.bookings)
+//     // }
+//     console.log(this.props)
+//     return (
+//       <div className="p-0">
+//           <h1>Welcome to homepage</h1>
+//         <div className="py-3 text-white text-center w-100 bg-dark">
+//           <p>A PWA Web App built on Next.js</p>
+//         </div>
+//         <CardGroup>
+//         {Array.isArray(this.props.bookings) ? (this.props.bookings.map((b,index) => (
+//             <BookingCard players={b.players} index={index} key={b.bookingId} booking={b} pitchId={b.pitchId} startTime={b.startTime} playersCount={b.playersCount}/>
+//         ))):null}
+//         </CardGroup>
+//       </div>
+//     );
+//   }
+// }
+
+// export default Home;
+
+
+export default function Home(props) {
+  const [bookings, setBookings] = React.useState([])
+
+  console.log(props)
+  // useEffect(() => {
+  //   console.log("yooo")
+  //   const getBookings = async () => {
+  //     bookings = await props.findAll()
+  //     setBookings(bookings)
+  //   }
+  //   getBookings().catch(console.error)
+  //   console.log(bookings)
+  // })
   return (
     <div className="p-0">
-      <Navbar />
-      <div className="w-100">
-        <img src="/home.jpg" className="img-fluid" />
+           <h1>Welcome to homepage</h1>
+         <div className="py-3 text-white text-center w-100 bg-dark">
+           <p>A PWA Web App built on Next.js</p>
+         </div>
+         <CardGroup>
+         {Array.isArray(props.bookings) ? (props.bookings.map((b,index) => (
+            <BookingCard players={b.players} index={index} key={b.bookingId} booking={b} pitchId={b.pitchId} startTime={b.startTime} playersCount={b.playersCount}/>
+        ))):null}
+        </CardGroup>
       </div>
-      <div className="container my-5">
-        <div className="row">
-          <Card src="https://images.pexels.com/photos/397096/pexels-photo-397096.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500" />
-          <Card src="https://images.pexels.com/photos/629162/pexels-photo-629162.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500" />
-          <Card src="https://images.pexels.com/photos/6992/forest-trees-northwestisbest-exploress.jpg?auto=compress&cs=tinysrgb&dpr=2&w=500" />
-          <Card src="https://images.pexels.com/photos/302804/pexels-photo-302804.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500" />
-          <Card src="https://images.pexels.com/photos/167698/pexels-photo-167698.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"/>
-          <Card src="https://images.pexels.com/photos/33109/fall-autumn-red-season.jpg?auto=compress&cs=tinysrgb&dpr=2&w=500" />
-        </div>
-      </div>
-      <div className="py-3 text-white text-center w-100 bg-dark">
-        <p>A PWA Web App built on Next.js</p>
-      </div>
-    </div>
-  );
+  )
 }
