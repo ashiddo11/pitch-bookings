@@ -9,24 +9,24 @@ class Home extends Component {
       bookings: []
     }
   }
-  componentDidMount = () => {
-    if ("serviceWorker" in navigator) {
-          window.addEventListener("load", function () {
-            navigator.serviceWorker.register("/sw-offline.js").then(
-              function (registration) {
-                console.log(
-                  "Service Worker registration successful with scope: ",
-                  registration.scope
-                );
-              },
-              function (err) {
-                console.log("Service Worker registration failed: ", err);
-              }
-            );
-          });
-        }
-      // this.props.findAll().then(bookings => this.setState({bookings: bookings}))
-      }
+  // componentDidMount = () => {
+  //   if ("serviceWorker" in navigator) {
+  //         window.addEventListener("load", function () {
+  //           navigator.serviceWorker.register("/sw-offline.js").then(
+  //             function (registration) {
+  //               console.log(
+  //                 "Service Worker registration successful with scope: ",
+  //                 registration.scope
+  //               );
+  //             },
+  //             function (err) {
+  //               console.log("Service Worker registration failed: ", err);
+  //             }
+  //           );
+  //         });
+  //       }
+  //     // this.props.findAll().then(bookings => this.setState({bookings: bookings}))
+  //     }
 
   componentDidUpdate(){
     const bookings = JSON.parse(localStorage.getItem("bookings")) || []
