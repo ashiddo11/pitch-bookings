@@ -32,8 +32,13 @@ export const Schema = {
         minimum: 1,
         maximum: 16
     },
+    total: {
+      type: 'number',
+      default: '300'
+    },
     players: {
       type: "array",
+      default: {},
       uniqueItems: true,
       items: {
         properties: {
@@ -43,8 +48,15 @@ export const Schema = {
           method: {
             type: "string"
           },
-          extra_notes: {
+          extraNotes: {
             type: "string"
+          },
+          amountPaid: {
+            type: "number"
+          },
+          paid: {
+            type: "boolean",
+            default: false
           }
         }
       }

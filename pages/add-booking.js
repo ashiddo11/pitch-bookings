@@ -8,11 +8,13 @@ class AddBooking extends Component {
     this.state = {
       pitchId: '',
       startTime: '',
-      playersCount: ''
+      playersCount: '',
+      totalAmount: ''
     }
     this.handleChangePitchId = this.handleChangePitchId.bind(this);
     this.handleChangePlayersCount = this.handleChangePlayersCount.bind(this);
     this.handleChangeStartTime = this.handleChangeStartTime.bind(this);
+    this.handleChangeTotalAmount = this.handleChangeTotalAmount.bind(this);
   }
 
   handleChangePitchId(event) {
@@ -23,6 +25,9 @@ class AddBooking extends Component {
   }
   handleChangePlayersCount(event) {
     this.setState({playersCount: event.target.value});
+  }
+  handleChangeTotalAmount(event) {
+    this.setState({totalAmount: event.target.value});
   }
 
   render() {
@@ -36,7 +41,7 @@ class AddBooking extends Component {
             <option value="1">1</option>
             <option value="2">2</option>
             <option value="3">3</option>
-            <option value="3">4</option>
+            <option value="4">4</option>
           </select>
         </div>
         <div className="form-group">
@@ -45,15 +50,25 @@ class AddBooking extends Component {
           onChange={this.handleChangePlayersCount}/>
         </div>
         <div className="form-group">
+          <label htmlFor="totalAmount">Total Amount</label>
+          <input type="text" className="form-control" id="totalAmount" placeholder="Total Amount" value={this.state.totalAmount}
+          onChange={this.handleChangeTotalAmount}/>
+        </div>
+        <div className="form-group">
           <label htmlFor="startTime">Time game starts</label>
           <input type="text" className="form-control" id="startTime" placeholder="Time game starts" value={this.state.startTime}
           onChange={this.handleChangeStartTime}/>
         </div>
-        <button onClick={async() => this.props.insert({
+        <button onClick={async() => {
+          this.props.insert({
           pitchId: this.state.pitchId, 
           startTime: this.state.startTime, 
           playersCount: this.state.playersCount}
-          )} type="submit" className="btn btn-primary">Submit</button>
+          )
+          this.props.findAll().then(b => {
+            localStorage.setItem("bookings", JSON.stringify(b))
+          })
+          }} type="submit" className="btn btn-primary">Submit</button>
       </form>
     );
   }
