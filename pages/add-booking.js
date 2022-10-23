@@ -1,5 +1,10 @@
 import React, {Component} from 'react';
-import { useHistory } from 'react-router-dom';
+import { useRouter } from 'next/router'
+
+const AddBookingWithRouter = (props) => {
+  const router = useRouter()
+  return <AddBooking {...props} router={router} />
+}
 
 class AddBooking extends Component {
 
@@ -60,18 +65,19 @@ class AddBooking extends Component {
           onChange={this.handleChangeStartTime}/>
         </div>
         <button onClick={async() => {
-          this.props.insert({
+          await this.props.insert({
           pitchId: this.state.pitchId, 
           startTime: this.state.startTime, 
           playersCount: this.state.playersCount}
           )
-          this.props.findAll().then(b => {
+          await this.props.findAll().then(b => {
             localStorage.setItem("bookings", JSON.stringify(b))
           })
+          // await this.props.router.push("/#")
           }} type="submit" className="btn btn-primary">Submit</button>
       </form>
     );
   }
 }
 
-export default AddBooking
+export default AddBookingWithRouter

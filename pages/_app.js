@@ -8,8 +8,8 @@ import { createRxDatabase, addRxPlugin, isRxDatabase, throwIfIsStorageWriteError
 import { getRxStorageDexie } from 'rxdb/plugins/dexie';
 import { RxDBDevModePlugin } from 'rxdb/plugins/dev-mode';
 const _ = require('lodash'); 
-import { ToastContainer, toast } from 'react-toastify';
-import * as moment from 'moment';
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
+import 'bootstrap/dist/css/bootstrap.css'
 
 // addRxPlugin(RxDBDevModePlugin);
 const dbName = 'payment-tracker';
@@ -52,6 +52,7 @@ class MyApp extends Component {
 
   async componentDidMount() {
     // if (_.isEmpty(this.state.db)){
+    // if (!this.db) {
     try {
         this.db = await this.createDatabase();
     } catch (error) {
@@ -76,6 +77,7 @@ class MyApp extends Component {
         startTime: startTime,
         playersCount: playersCount})
       console.log(res)
+      // Notify.success('Sol lucet omnibus');
     } catch (error) {
       console.error(error)
     }
@@ -89,9 +91,10 @@ class MyApp extends Component {
       const result = await this.db.bookings.find().exec()
       const bookings = []
       result.map(booking => {
-        console.log(booking)
         bookings.push({total: booking.total, players: booking.players, playersCount: booking.playersCount, startTime: booking.startTime, pitchId: booking.pitchId, bookingId: booking.bookingId})
       })
+      console.log(bookings)
+      this.setState({"bookings": bookings})
       return bookings
     } catch (error) {
       console.error(error)
@@ -104,6 +107,7 @@ class MyApp extends Component {
     try {
       console.log("Doing")
       localStorage.setItem("bookings", "[]")
+      localStorage.setItem("updateBookings", true)
       await this.db.remove()
       const db = await createRxDatabase({
         name: dbName,
@@ -132,7 +136,6 @@ class MyApp extends Component {
       players: players})
       console.log(res)
       const bookings = await this.findAll()
-      console.log(bookings)
       localStorage.setItem("bookings", JSON.stringify(bookings))
     } catch (error) {
       console.error(error)
@@ -146,22 +149,22 @@ class MyApp extends Component {
       <>
         <Head>
           <meta name="viewport" content="width=device-width, initial-scale=1" />
-          <link
+          {/* <link
             href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
             rel="stylesheet"
             integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1"
             crossOrigin="anonymous"
-          />
+          /> */}
           <link rel='manifest' href='/manifest.json' />
         </Head>
 
-        <Script
+        {/* <Script
           src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
           integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
           crossOrigin="anonymous"
-        />
+        /> */}
         <Navbar nukeDB = {this.nukeDB} state = {this.state} />
-        <Component  onBookingsChange = {this.handleBookingsChange} upsert = {this.upsert} findAll = {this.findAll} insert = {this.insert}  rootState={this.state} bookings={this.state.bookings}/>
+        <Component  bookings={this.state.bookings} onBookingsChange = {this.handleBookingsChange} upsert = {this.upsert} findAll = {this.findAll} insert = {this.insert}  rootState={this.state}/>
       </>
     );
   }

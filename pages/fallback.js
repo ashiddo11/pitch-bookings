@@ -3,12 +3,12 @@ import BookingCard from "../components/Card";
 import CardGroup from 'react-bootstrap/CardGroup';
 import { useRouter } from 'next/router'
 
-const HomeWithRouter = (props) => {
+const FallbackWithRouter = (props) => {
   const router = useRouter()
-  return <Home {...props} router={router} />
+  return <Fallback {...props} router={router} />
 }
 
-class Home extends Component {
+class Fallback extends Component {
   constructor(props){
     super(props);
     this.state = {
@@ -81,11 +81,7 @@ class Home extends Component {
           <h1>Welcome to homepage</h1>
         <div className="py-3 text-white text-center w-100 bg-dark">
           <p>A PWA Web App built on Next.js</p>
-          <button onClick={() => {
-          this.props.router.reload()
-          }} type="submit" className="btn btn-primary">Submit</button>
         </div>
-        
         <CardGroup>
         {Array.isArray(this.state.bookings) ? (this.state.bookings.map((b,index) => (
             <BookingCard players={b.players} index={index} key={b.bookingId} booking={b} pitchId={b.pitchId} startTime={b.startTime} playersCount={b.playersCount}/>
@@ -96,7 +92,7 @@ class Home extends Component {
   }
 }
 
-export default HomeWithRouter;
+export default FallbackWithRouter;
 
 
 // export default function Home(props) {
