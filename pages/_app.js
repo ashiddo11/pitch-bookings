@@ -9,7 +9,6 @@ import { getRxStorageDexie } from 'rxdb/plugins/dexie';
 import { RxDBDevModePlugin } from 'rxdb/plugins/dev-mode';
 const _ = require('lodash'); 
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
-import 'bootstrap/dist/css/bootstrap.css'
 
 // addRxPlugin(RxDBDevModePlugin);
 const dbName = 'payment-tracker';
@@ -149,20 +148,20 @@ class MyApp extends Component {
       <>
         <Head>
           <meta name="viewport" content="width=device-width, initial-scale=1" />
-          {/* <link
+          <link
             href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
             rel="stylesheet"
             integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1"
             crossOrigin="anonymous"
-          /> */}
+          />
           <link rel='manifest' href='/manifest.json' />
         </Head>
 
-        {/* <Script
+        <Script
           src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
           integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
           crossOrigin="anonymous"
-        /> */}
+        />
         <Navbar nukeDB = {this.nukeDB} state = {this.state} />
         <Component  bookings={this.state.bookings} onBookingsChange = {this.handleBookingsChange} upsert = {this.upsert} findAll = {this.findAll} insert = {this.insert}  rootState={this.state}/>
       </>
